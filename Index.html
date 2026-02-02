@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¿Quieres ser mi Valentín? 💖</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body {
+      margin: 0; min-height: 100vh; display: flex; justify-content: center; align-items: center;
+      background: linear-gradient(135deg, #cfe9ff, #e6f4ff);
+      text-align: center; padding: 20px; overflow: hidden;
+    }
+    .hearts-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+    .heart-bg { position: absolute; color: rgba(255,105,180,.35); animation: float 8s linear infinite; }
+    @keyframes float { from{transform:translateY(110vh) scale(.8)} to{transform:translateY(-10vh) scale(1.2)} }
+    .card {
+      position: relative; z-index: 1; background: #fff; border-radius: 24px;
+      padding: 32px 24px; max-width: 420px; width: 100%;
+      box-shadow: 0 20px 40px rgba(0,0,0,.15); animation: popIn 1s ease;
+    }
+    h1 { font-size: 1.8rem; margin-bottom: 12px; }
+    p { margin-bottom: 24px; }
+    .buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+    button {
+      width: 100%; border: none; border-radius: 999px; padding: 14px 22px;
+      font-size: 1rem; cursor: pointer; transition: transform .2s;
+    }
+    .yes { background:#ff4d6d; color:#fff; animation:pulse 1.8s infinite; }
+    .no { background:#e0e0e0; }
+    .message { margin-top: 24px; font-size: 1.1rem; display:none; }
+    .next-link {
+      display:inline-block; margin-top:20px; padding:14px 22px; background:#ff4d6d;
+      color:#fff; text-decoration:none; border-radius:999px; animation:pulse 1.6s infinite;
+    }
+    @keyframes popIn { from{transform:scale(.8);opacity:0} to{transform:scale(1);opacity:1} }
+    @keyframes pulse { 0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)} }
+    @keyframes floatUp { to{transform:translateY(-110vh);opacity:0} }
+  </style>
+</head>
+<body>
+  <div class="hearts-bg"></div>
+  <div class="card" id="card">
+    <h1>💌 Oye princess…</h1>
+    <p>Este 14 de febrero me harías muy feliz si aceptaras: </p>
+    <h1>¿Quieres ser mi Valentín? 💘💘💘</h1>
+    <div class="buttons">
+      <button class="yes" onclick="sayYes()">Sí, obvio 💖</button>
+      <button class="no" onclick="moveNo()">Mmm… nopi 🙈</button>
+    </div>
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    let yesScale = 1;
+
+    function sayYes() {
+      const card = document.getElementById('card');
+      card.innerHTML = `
+        <h1>🥰 ¡Sabía que dirías que sí Monkey! 🥰</h1>
+        <p>Te amo y ya soy la persona más feliz del mundo!!💞 </p>
+        <p>💌 <strong>Abre la siguiente carta para más detalles</strong></p>
+        <a href="options.html" class="next-link">👉 Aquí la siguiente cartita 💌</a>
+      `;
+      launchHearts();
+    }
+
+    function moveNo() {
+      const message = document.getElementById('message');
+      const yesBtn = document.querySelector('.yes');
+      message.style.display = 'block';
+      message.innerHTML = '❌❌ eh... botón erróneo… ❌❌ </p> <strong>ANDELEEE</strong>';
+      yesScale += 0.15;
+      yesBtn.style.transform = `scale(${yesScale})`;
+      setTimeout(() => message.style.display = 'none', 1500);
+    }
+
+    function launchHearts() {
+      for (let i = 0; i < 20; i++) {
+        const h = document.createElement('div');
+        h.textContent = Math.random() > .5 ? '💖' : '💌';
+        h.style.position = 'fixed';
+        h.style.left = Math.random() * 100 + 'vw';
+        h.style.bottom = '-20px';
+        h.style.fontSize = 20 + Math.random() * 20 + 'px';
+        h.style.animation = 'floatUp 2.5s ease forwards';
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 2500);
+      }
+    }
+
+    function createBackgroundHearts() {
+      const c = document.querySelector('.hearts-bg');
+      for (let i = 0; i < 25; i++) {
+        const h = document.createElement('div');
+        h.className = 'heart-bg';
+        h.textContent = Math.random() > .5 ? '💖' : '💌';
+        h.style.left = Math.random() * 100 + 'vw';
+        h.style.fontSize = 16 + Math.random() * 30 + 'px';
+        h.style.animationDuration = 6 + Math.random() * 6 + 's';
+        c.appendChild(h);
+      }
+    }
+    createBackgroundHearts();
+  </script>
+</body>
+</html>

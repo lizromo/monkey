@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nuestra cita 💖</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff3cd;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    /* Fondo changuitos */
+    .monkey-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .monkey {
+      position: absolute;
+      opacity: 0.4;
+      animation: float 10s linear infinite;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .monkey.react {
+      transform: scale(1.6) rotate(20deg);
+      opacity: 0.9;
+    }
+
+    @keyframes float {
+      from { transform: translateY(110vh) scale(0.8); }
+      to { transform: translateY(-10vh) scale(1.2); }
+    }
+
+    .letter {
+      position: relative;
+      z-index: 1;
+      background: white;
+      border-radius: 24px;
+      padding: 28px 22px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      text-align: center;
+      animation: openLetter 0.8s ease;
+    }
+
+    @keyframes openLetter {
+      from { transform: translateY(20px) scale(0.95); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    h1 { font-size: 1.6rem; margin-bottom: 12px; }
+    p { font-size: 1rem; margin-bottom: 20px; }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .option {
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff9e6;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: pop 0.5s ease;
+    }
+
+    .option:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .final {
+      display: none;
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="monkey-bg" id="monkeys"></div>
+
+  <div class="letter">
+    <h1>💌 Nuestra cita del 14 💌</h1>
+    <p>Princess, elige lo que más te antoje hacer juntas este 14 de febrero 💐</p>
+
+    <div class="options" id="options">
+      <div class="option" onclick="choosePlan()">🥾 Hiking en parque ejidal con Kira 🐶</div>
+      <div class="option" onclick="choosePlan()">🎬 Autocinema bajo las estrellas ✨</div>
+      <div class="option" onclick="choosePlan()">🖼️ MUAC en Ciudad Universitaria + brunch ☕🥐</div>
+    </div>
+
+    <div class="final" id="final">🥰 <strong>Me encanta el plan!! </strong> 🥰<br>Prepárate para un 14 inolvidable 💖<br> Te amo Chiqui <3 </div>
+  </div>
+
+  <script>
+    let chosen = false;
+
+    function choosePlan() {
+      if (chosen) return;
+      chosen = true;
+
+      const options = document.getElementById('options');
+      if (options) options.remove();
+
+      const final = document.getElementById('final');
+      final.style.display = 'block';
+
+      // Reacción de changuitos 🐵
+      const monkeys = document.querySelectorAll('.monkey');
+      monkeys.forEach((m, i) => {
+        setTimeout(() => m.classList.add('react'), i * 60);
+      });
+    }
+
+    function createMonkeys() {
+      const container = document.getElementById('monkeys');
+      if (!container) return;
+
+      for (let i = 0; i < 25; i++) {
+        const m = document.createElement('div');
+        m.className = 'monkey';
+        m.textContent = '🐵';
+        m.style.left = Math.random() * 100 + 'vw';
+        m.style.fontSize = 18 + Math.random() * 30 + 'px';
+        m.style.animationDuration = 6 + Math.random() * 6 + 's';
+        container.appendChild(m);
+      }
+    }
+
+    createMonkeys();
+  </script>
+</body>
+</html>
